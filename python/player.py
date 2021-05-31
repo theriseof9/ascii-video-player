@@ -1,7 +1,7 @@
 import tempfile
 import video_engine as ve
 
-def play(filename, strategy=None, output=None, play_audio=False):åå
+def play(filename, strategy=None, output=None, play_audio=False):
     engine = ve.VideoEngine()
     engine.load_video_from_file(filename)
     if play_audio:
