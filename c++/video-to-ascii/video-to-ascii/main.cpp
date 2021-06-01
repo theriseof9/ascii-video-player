@@ -9,6 +9,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <time.h>
 
 // Utilities
 #include "colorUtil.hpp"
@@ -63,18 +64,16 @@ void decToAscii(VideoCapture cap) {
                 const uint8_t intensity = (bgrPixel[0] + bgrPixel[1] + bgrPixel[2]) / 60;
                 buffer[buffer.size()-1] += "\u001b[38;5;" + to_string(getColorId(bgrPixel[0], bgrPixel[1], bgrPixel[2])) + "m" + DENSITY[intensity];
             }
-            buffer[buffer.size()-1] += "\n";
+            if (i != frame.rows - 1) buffer[buffer.size()-1] += "\n";
         }
     }
 }
 
 // MARK:- Termination Handler
 void sigCleanUp(int signum) {
-    // Release the video capture object
-    system("clear && printf '\e[3J'");
     cout << "\u001b[0mThanks, and goodbye!" << endl;
     
-    exit(0);
+    exit(signum);
 }
 
 // MARK:- Main
@@ -103,7 +102,7 @@ int main() {
         return -1;
     }
     
-    const auto targetDelay = 1000000 / cap.get(CAP_PROP_FPS);
+    const auto targetDelay = 1000ms / cap.get(CAP_PROP_FPS);
     
     thread decThread(decToAscii, cap); // Start renderer thread
     
@@ -122,10 +121,17 @@ int main() {
         // if (c == 27) break;
         const auto t2 = high_resolution_clock::now();
         const auto dur = duration_cast<microseconds>(t2 - t1).count();
-        if (dur >= 0) usleep(targetDelay - dur);
+        // struct timespec delayTime;
+        // delayTime.tv_nsec = (targetDelay - dur) * 1000;
+        
+        if (dur >= 0) this_thread::sleep_for(targetDelay - (t2 - t1));
     }
-
+    cout << "End of video, thanks for watching!" << endl;
+    
     decThread.detach(); // If the thread is still running, detach it (at this point it should not be running)
+    
+    // Release the video capture object
+    cap.release();
     
     sigCleanUp(2);
     
