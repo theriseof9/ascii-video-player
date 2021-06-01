@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		546DFDDA2665C34C0005F05E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 546DFDD92665C34C0005F05E /* main.cpp */; };
+		DA65A3D826661A4200546D16 /* colorUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA65A3D626661A4200546D16 /* colorUtil.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,6 +27,8 @@
 		546DFDD62665C34C0005F05E /* video-to-ascii */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "video-to-ascii"; sourceTree = BUILT_PRODUCTS_DIR; };
 		546DFDD92665C34C0005F05E /* main.cpp */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; wrapsLines = 1; };
 		546DFDE02665D4D00005F05E /* video-to-ascii.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "video-to-ascii.entitlements"; sourceTree = "<group>"; };
+		DA65A3D626661A4200546D16 /* colorUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = colorUtil.cpp; sourceTree = "<group>"; };
+		DA65A3D726661A4200546D16 /* colorUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = colorUtil.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,8 @@
 			children = (
 				546DFDE02665D4D00005F05E /* video-to-ascii.entitlements */,
 				546DFDD92665C34C0005F05E /* main.cpp */,
+				DA65A3D626661A4200546D16 /* colorUtil.cpp */,
+				DA65A3D726661A4200546D16 /* colorUtil.hpp */,
 			);
 			path = "video-to-ascii";
 			sourceTree = "<group>";
@@ -121,6 +126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				546DFDDA2665C34C0005F05E /* main.cpp in Sources */,
+				DA65A3D826661A4200546D16 /* colorUtil.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
