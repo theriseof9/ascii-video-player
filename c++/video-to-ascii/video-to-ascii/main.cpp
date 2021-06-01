@@ -48,7 +48,7 @@ int main() {
         cout << "Error opening video stream or file" << endl;
         return -1;
     }
-
+    vector<string> buffer;
     while (1) {
         // Get terminal size
         ioctl(STDOUT_FILENO, TIOCGWINSZ, &termSize); // This only works on Unix
@@ -72,6 +72,7 @@ int main() {
         cout << "\u001b[" << termSize.ws_row + 1 << "A";
         
         for (int i = 0; i < frame.rows; i++) {
+            buffer.push_back("");
             for (int j = 0; j < frame.cols; j++) {
                 bgrPixel.val[2] = pixelPtr[i * frame.cols * cn + j * cn + 0]; // B
                 bgrPixel.val[1] = pixelPtr[i * frame.cols * cn + j * cn + 1]; // G
@@ -79,25 +80,19 @@ int main() {
 
                 // do something with RGB values...
                 const uint8_t intensity = (bgrPixel[0] + bgrPixel[1] + bgrPixel[2]) / 60;
-                cout << "\u001b[38;5;" << getColorId(bgrPixel[0], bgrPixel[1], bgrPixel[2]) << "m" << DENSITY[intensity];
+                buffer[buffer.size()-1] += "\u001b[38;5;"+to_string(getColorId(bgrPixel[0], bgrPixel[1], bgrPixel[2]))+"m"+DENSITY[intensity];
             }
-            cout << "\n";
+            buffer[buffer.size()-1] += "\n";
         }
-        cout << flush;
-
-        // Display the resulting frame
-        imshow("Output", frame);
-
         // Press ESC on keyboard to exit
         // char c = (char) waitKey(1);
         // if (c == 27) break;
     }
-
+    for (int i = 0; i < buffer.size(); i ++) {
+        cout << buffer[i] << flush;
+    }
     // When everything done, release the video capture object
     cap.release();
-
-    // Closes all the frames
-    destroyAllWindows();
 
     return 0;
 }
