@@ -34,7 +34,7 @@ const string DENSITY[] = {
 struct winsize termSize;
 vector<string> buffer;
 
-// Renderer function, running async
+// MARK:- Renderer function, running async
 void decToAscii(VideoCapture cap) {
     while (1) {
         Mat frame;
@@ -68,17 +68,30 @@ void decToAscii(VideoCapture cap) {
     }
 }
 
+// MARK:- Termination Handler
+void sigCleanUp(int signum) {
+    // Release the video capture object
+    system("clear && printf '\e[3J'");
+    cout << "\u001b[0mThanks, and goodbye!" << endl;
+    
+    exit(0);
+}
+
+// MARK:- Main
 int main() {
     // Fast IO speed
     cout.tie(0);
     ios_base::sync_with_stdio(0);
+    
+    // Register SIGINT signal handler
+    signal(SIGINT, sigCleanUp);
     
     // Get terminal size
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &termSize); // This only works on Unix
     
     // Create a VideoCapture object and open the input file
     // If the input is the web camera, pass 0 instead of the video file name
-    // Find home dir (on unix only)
+    // Find home dir (on Unix only)
     string HOME(getenv("HOME"));
     string vidPath("/video.mp4");
     // HOME + vidPath
@@ -91,8 +104,6 @@ int main() {
     }
     
     const auto targetDelay = 1000000 / cap.get(CAP_PROP_FPS);
-    
-    // int totalFrame = cap.get(CAP_PROP_FRAME_COUNT);
     
     thread decThread(decToAscii, cap); // Start renderer thread
     
@@ -113,13 +124,10 @@ int main() {
         const auto dur = duration_cast<microseconds>(t2 - t1).count();
         if (dur >= 0) usleep(targetDelay - dur);
     }
+
+    decThread.detach(); // If the thread is still running, detach it (at this point it should not be running)
     
-    cout << "Done" << endl;
-    
-    decThread.join(); // Make sure thread is finished
-    
-    // When everything is done, release the video capture object
-    cap.release();
+    sigCleanUp(2);
     
     return 0;
 }
