@@ -7,6 +7,8 @@
 
 #include "opencv2/opencv.hpp"
 #include <iostream>
+#include <thread>
+
 #define PBSTR "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
 #define PBWIDTH 60
 
@@ -40,32 +42,12 @@ void printProgress(double percentage) {
     fflush(stdout);
 }
 
+vector<string> buffer;
 
-int main() {
-    // Fast IO speed
-    cout.tie(0);
-    ios_base::sync_with_stdio(0);
-    
-    // Create a VideoCapture object and open the input file
-    // If the input is the web camera, pass 0 instead of the video file name
-    // Find home dir (on unix only)
-    string HOME(getenv("HOME"));
-    string vidPath("/video.mp4");
-    // HOME + vidPath
-    VideoCapture cap(HOME + vidPath);
-
-    // Check if camera opened successfully
-    if (!cap.isOpened()) {
-        cout << "Error opening video stream or file" << endl;
-        return -1;
-    }
-    vector<string> buffer;
-    int fmCnt = 0;
-    int totalFrame = cap.get(CAP_PROP_FRAME_COUNT);
-    
+void decToAscii(VideoCapture cap) {
     while (1) {
-        printProgress(float(fmCnt)/float(totalFrame));
-        fmCnt += 1;
+        // printProgress(float(fmCnt)/float(totalFrame));
+        // fmCnt += 1;
         // Get terminal size
         ioctl(STDOUT_FILENO, TIOCGWINSZ, &termSize); // This only works on Unix
         
@@ -82,10 +64,6 @@ int main() {
         uint8_t* pixelPtr = (uint8_t*)frame.data;
         int cn = frame.channels();
         Scalar_<uint8_t> bgrPixel;
-
-        // First move the cursor all the way to the top left again
-        cout << "\u001b[" << termSize.ws_col << "D";
-        cout << "\u001b[" << termSize.ws_row + 1 << "A";
         
         for (int i = 0; i < frame.rows; i++) {
             buffer.push_back("");
@@ -104,11 +82,52 @@ int main() {
         // char c = (char) waitKey(1);
         // if (c == 27) break;
     }
-    for (int i = 0; i < buffer.size(); i ++) {
-        cout << buffer[i] << flush;
-    }
-    // When everything done, release the video capture object
-    cap.release();
+}
 
+int main() {
+    // Fast IO speed
+    cout.tie(0);
+    ios_base::sync_with_stdio(0);
+    
+    // Create a VideoCapture object and open the input file
+    // If the input is the web camera, pass 0 instead of the video file name
+    // Find home dir (on unix only)
+    string HOME(getenv("HOME"));
+    string vidPath("/video.mp4");
+    // HOME + vidPath
+    VideoCapture cap(HOME + vidPath);
+    
+    // Check if camera was opened successfully
+    if (!cap.isOpened()) {
+        cout << "Error opening video stream or file" << endl;
+        return -1;
+    }
+    
+    // int fmCnt = 0;
+    // int totalFrame = cap.get(CAP_PROP_FRAME_COUNT);
+    
+    thread decThread(decToAscii, cap);
+    
+    cout << "Performing initial buffering" << endl;
+    sleep(2);
+    
+    unsigned int i = 0;
+    while (1) {
+        cout << buffer[i] << flush;
+        i++;
+        if (i > buffer.size()) break;
+    }
+    
+    cout << "Done";
+    
+    /*for (int i = 0; i < buffer.size(); i ++) {
+        cout << buffer[i] << flush;
+    }*/
+    
+    decThread.join();
+    
+    // When everything is done, release the video capture object
+    cap.release();
+    
     return 0;
 }
