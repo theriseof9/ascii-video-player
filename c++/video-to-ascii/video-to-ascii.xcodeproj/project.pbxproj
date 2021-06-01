@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		546DFDD62665C34C0005F05E /* video-to-ascii */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "video-to-ascii"; sourceTree = BUILT_PRODUCTS_DIR; };
-		546DFDD92665C34C0005F05E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		546DFDD92665C34C0005F05E /* main.cpp */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; wrapsLines = 1; };
 		546DFDE02665D4D00005F05E /* video-to-ascii.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "video-to-ascii.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -178,6 +178,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/Cellar/opencv/4.5.2_4/include/opencv4;
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/opencv/4.5.2_4/lib;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -231,6 +233,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/Cellar/opencv/4.5.2_4/include/opencv4;
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/opencv/4.5.2_4/lib;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -242,14 +246,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "video-to-ascii/video-to-ascii.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XA2K6HP7MQ;
+				DEVELOPMENT_TEAM = Q382QLKDG3;
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
-					"/usr/local/Cellar/opencv/4.5.2_4/include/opencv4\n/usr/local/Cellar/opencv/4.5.2_4/include/opencv4\n",
+					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
+					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/Cellar/opencv/4.5.2_4/lib\n/usr/local/Cellar/opencv/4.5.2_4/lib\n",
+					/usr/local/Cellar/opencv/4.5.2_4/lib,
+					/usr/local/Cellar/opencv/4.5.2_4/lib,
 				);
 				OTHER_LDFLAGS = (
 					"-lopencv_gapi",
@@ -370,14 +377,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "video-to-ascii/video-to-ascii.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XA2K6HP7MQ;
+				DEVELOPMENT_TEAM = Q382QLKDG3;
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
-					"/usr/local/Cellar/opencv/4.5.2_4/include/opencv4\n/usr/local/Cellar/opencv/4.5.2_4/include/opencv4\n",
+					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
+					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/Cellar/opencv/4.5.2_4/lib\n/usr/local/Cellar/opencv/4.5.2_4/lib\n",
+					/usr/local/Cellar/opencv/4.5.2_4/lib,
+					/usr/local/Cellar/opencv/4.5.2_4/lib,
 				);
 				OTHER_LDFLAGS = (
 					"-lopencv_gapi",
