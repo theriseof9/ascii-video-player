@@ -113,6 +113,7 @@ int main() {
     
     while (1) {
         const auto t1 = high_resolution_clock::now();
+        printf("\033c");
         cout << buffer[i];
         i++;
         if (i > buffer.size()) break;
