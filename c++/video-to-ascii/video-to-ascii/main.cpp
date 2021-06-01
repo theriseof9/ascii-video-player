@@ -8,6 +8,9 @@
 #include "opencv2/opencv.hpp"
 #include <iostream>
 
+// Utilities
+#include "colorUtil.hpp"
+
 // Finding terminal size
 #include <sys/ioctl.h> //ioctl() and TIOCGWINSZ
 #include <unistd.h> // for STDOUT_FILENO
@@ -64,17 +67,21 @@ int main() {
         int cn = frame.channels();
         Scalar_<uint8_t> bgrPixel;
 
-        for(int i = 0; i < frame.rows; i++) {
-            for(int j = 0; j < frame.cols; j++) {
+        // First move the cursor all the way to the top left again
+        cout << "\u001b[" << termSize.ws_col << "D";
+        cout << "\u001b[" << termSize.ws_row + 1 << "A";
+        
+        for (int i = 0; i < frame.rows; i++) {
+            for (int j = 0; j < frame.cols; j++) {
                 bgrPixel.val[2] = pixelPtr[i * frame.cols * cn + j * cn + 0]; // B
                 bgrPixel.val[1] = pixelPtr[i * frame.cols * cn + j * cn + 1]; // G
                 bgrPixel.val[0] = pixelPtr[i * frame.cols * cn + j * cn + 2]; // R
 
                 // do something with RGB values...
                 const uint8_t intensity = (bgrPixel[0] + bgrPixel[1] + bgrPixel[2]) / 60;
-                cout << DENSITY[intensity];
+                cout << "\u001b[38;5;" << getColorId(bgrPixel[0], bgrPixel[1], bgrPixel[2]) << "m" << DENSITY[intensity];
             }
-            cout << endl;
+            cout << "\n";
         }
         cout << flush;
 
@@ -82,8 +89,8 @@ int main() {
         imshow("Output", frame);
 
         // Press ESC on keyboard to exit
-        char c = (char) waitKey(25);
-        if (c == 27) break;
+        // char c = (char) waitKey(1);
+        // if (c == 27) break;
     }
 
     // When everything done, release the video capture object
