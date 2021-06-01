@@ -22,20 +22,19 @@ using namespace std;
 using namespace cv;
 using namespace std::chrono;
 
-// ========= //
-// Constants //
+// MARK: Constants
 const string DENSITY[] = {
     " ", " ", ".", ":", "!", "+", "*", "e", "$", "@", "8",
     ".", "*", "e", "s", "◍",
     "░", "▒", "▓", "█"
 };
 
-// ======= //
-// Globals //
+// MARK: Globals
 struct winsize termSize;
 vector<string> buffer;
 
 // MARK:- Renderer function, running async
+
 void decToAscii(VideoCapture cap) {
     while (1) {
         Mat frame;
@@ -69,7 +68,15 @@ void decToAscii(VideoCapture cap) {
     }
 }
 
+// MARK:- Audio playback thread
+// Its sole purpose is to start the ffplay program
+
+void playAudio(string path) {
+    system(("ffplay -vn -nodisp " + path + " 2>/dev/null").c_str());
+}
+
 // MARK:- Termination Handler
+
 void sigCleanUp(int signum) {
     cout << "\u001b[0mThanks, and goodbye!" << endl;
     
@@ -77,6 +84,7 @@ void sigCleanUp(int signum) {
 }
 
 // MARK:- Main
+
 int main() {
     // Fast IO speed
     cout.tie(0);
@@ -109,11 +117,13 @@ int main() {
     cout << "Performing initial buffering, please wait a second..." << endl;
     sleep(1);
     
+    thread audioThread(playAudio, HOME + vidPath); // Start audio thread
+    
     unsigned int i = 0;
     
     while (1) {
         const auto t1 = high_resolution_clock::now();
-        printf("\033c");
+        // printf("\033c");
         cout << buffer[i];
         i++;
         if (i > buffer.size()) break;
