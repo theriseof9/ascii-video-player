@@ -8,9 +8,7 @@
 #include "opencv2/opencv.hpp"
 #include <iostream>
 #include <thread>
-
-#define PBSTR "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-#define PBWIDTH 60
+#include <chrono>
 
 // Utilities
 #include "colorUtil.hpp"
@@ -21,9 +19,10 @@
 
 using namespace std;
 using namespace cv;
+using namespace std::chrono;
 
-// ======= //
-// Globals //
+// ========= //
+// Constants //
 const string DENSITY[] = {
     " ", " ", ".", ":", "!", "+", "*", "e", "$", "@", "8",
     ".", "*", "e", "s", "◍",
@@ -31,26 +30,13 @@ const string DENSITY[] = {
 };
 
 // ======= //
-// Structs //
+// Globals //
 struct winsize termSize;
-
-void printProgress(double percentage) {
-    int val = (int) (percentage * 100);
-    int lpad = (int) (percentage * PBWIDTH);
-    int rpad = PBWIDTH - lpad;
-    printf("\r%3d%% [%.*s%*s]", val, lpad, PBSTR, rpad, "");
-    fflush(stdout);
-}
-
 vector<string> buffer;
 
+// Renderer function, running async
 void decToAscii(VideoCapture cap) {
     while (1) {
-        // printProgress(float(fmCnt)/float(totalFrame));
-        // fmCnt += 1;
-        // Get terminal size
-        ioctl(STDOUT_FILENO, TIOCGWINSZ, &termSize); // This only works on Unix
-        
         Mat frame;
         // Capture frame-by-frame
         cap >> frame;
@@ -65,8 +51,9 @@ void decToAscii(VideoCapture cap) {
         int cn = frame.channels();
         Scalar_<uint8_t> bgrPixel;
         
+        buffer.push_back("");
+        buffer[buffer.size()-1] += "\u001b[" + to_string(termSize.ws_col) + "D\u001b[" + to_string(termSize.ws_row) + "A";
         for (int i = 0; i < frame.rows; i++) {
-            buffer.push_back("");
             for (int j = 0; j < frame.cols; j++) {
                 bgrPixel.val[2] = pixelPtr[i * frame.cols * cn + j * cn + 0]; // B
                 bgrPixel.val[1] = pixelPtr[i * frame.cols * cn + j * cn + 1]; // G
@@ -74,13 +61,10 @@ void decToAscii(VideoCapture cap) {
 
                 // do something with RGB values...
                 const uint8_t intensity = (bgrPixel[0] + bgrPixel[1] + bgrPixel[2]) / 60;
-                buffer[buffer.size()-1] += "\u001b[38;5;"+to_string(getColorId(bgrPixel[0], bgrPixel[1], bgrPixel[2]))+"m"+DENSITY[intensity];
+                buffer[buffer.size()-1] += "\u001b[38;5;" + to_string(getColorId(bgrPixel[0], bgrPixel[1], bgrPixel[2])) + "m" + DENSITY[intensity];
             }
             buffer[buffer.size()-1] += "\n";
         }
-        // Press ESC on keyboard to exit
-        // char c = (char) waitKey(1);
-        // if (c == 27) break;
     }
 }
 
@@ -88,6 +72,9 @@ int main() {
     // Fast IO speed
     cout.tie(0);
     ios_base::sync_with_stdio(0);
+    
+    // Get terminal size
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &termSize); // This only works on Unix
     
     // Create a VideoCapture object and open the input file
     // If the input is the web camera, pass 0 instead of the video file name
@@ -103,28 +90,33 @@ int main() {
         return -1;
     }
     
-    // int fmCnt = 0;
+    const auto targetDelay = 1000000 / cap.get(CAP_PROP_FPS);
+    
     // int totalFrame = cap.get(CAP_PROP_FRAME_COUNT);
     
-    thread decThread(decToAscii, cap);
+    thread decThread(decToAscii, cap); // Start renderer thread
     
-    cout << "Performing initial buffering" << endl;
-    sleep(2);
+    cout << "Performing initial buffering, please wait a second..." << endl;
+    sleep(1);
     
     unsigned int i = 0;
+    
     while (1) {
-        cout << buffer[i] << flush;
+        const auto t1 = high_resolution_clock::now();
+        cout << buffer[i];
         i++;
         if (i > buffer.size()) break;
+        // Press ESC on keyboard to exit
+        // char c = (char) waitKey(5);
+        // if (c == 27) break;
+        const auto t2 = high_resolution_clock::now();
+        const auto dur = duration_cast<microseconds>(t2 - t1).count();
+        if (dur >= 0) usleep(targetDelay - dur);
     }
     
-    cout << "Done";
+    cout << "Done" << endl;
     
-    /*for (int i = 0; i < buffer.size(); i ++) {
-        cout << buffer[i] << flush;
-    }*/
-    
-    decThread.join();
+    decThread.join(); // Make sure thread is finished
     
     // When everything is done, release the video capture object
     cap.release();
