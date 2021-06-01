@@ -15,18 +15,25 @@
 using namespace std;
 using namespace cv;
 
-// ====== //
-// Globals
+// ======= //
+// Globals //
 const string DENSITY[] = {
     " ", " ", ".", ":", "!", "+", "*", "e", "$", "@", "8",
     ".", "*", "e", "s", "◍",
     "░", "▒", "▓", "█"
 };
 
+// ======= //
+// Structs //
+struct winsize termSize;
+
 int main() {
     // Create a VideoCapture object and open the input file
     // If the input is the web camera, pass 0 instead of the video file name
-    VideoCapture cap("/Users/vinkwok/Documents/Xcode Projects/ascii-video-player/c++/video-to-ascii/video-to-ascii/test-vid.mp4");
+    // Find home dir (on unix only)
+    string HOME(getenv("HOME"));
+    string vidPath("/video.mp4");
+    VideoCapture cap(HOME + vidPath);
 
     // Check if camera opened successfully
     if (!cap.isOpened()) {
@@ -35,15 +42,21 @@ int main() {
     }
 
     while (1) {
+        // Get terminal size
+        ioctl(STDOUT_FILENO, TIOCGWINSZ, &termSize); // This only works on Unix
+        
         Mat frame;
         // Capture frame-by-frame
         cap >> frame;
 
         // If the frame is empty, break immediately
         if (frame.empty()) break;
+        
+        // Resize frame to the size of the terminal
+        resize(frame, frame, Size(termSize.ws_col, termSize.ws_row), 0, 0, INTER_AREA);
 
         // Display the resulting frame
-        imshow("Frame", frame);
+        imshow("Output", frame);
 
         // Press  ESC on keyboard to exit
         char c = (char) waitKey(25);
