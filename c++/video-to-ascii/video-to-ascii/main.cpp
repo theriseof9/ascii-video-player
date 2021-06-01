@@ -7,6 +7,8 @@
 
 #include "opencv2/opencv.hpp"
 #include <iostream>
+#define PBSTR "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+#define PBWIDTH 60
 
 // Utilities
 #include "colorUtil.hpp"
@@ -30,6 +32,15 @@ const string DENSITY[] = {
 // Structs //
 struct winsize termSize;
 
+void printProgress(double percentage) {
+    int val = (int) (percentage * 100);
+    int lpad = (int) (percentage * PBWIDTH);
+    int rpad = PBWIDTH - lpad;
+    printf("\r%3d%% [%.*s%*s]", val, lpad, PBSTR, rpad, "");
+    fflush(stdout);
+}
+
+
 int main() {
     // Fast IO speed
     cout.tie(0);
@@ -49,7 +60,12 @@ int main() {
         return -1;
     }
     vector<string> buffer;
+    int fmCnt = 0;
+    int totalFrame = cap.get(CAP_PROP_FRAME_COUNT);
+    
     while (1) {
+        printProgress(float(fmCnt)/float(totalFrame));
+        fmCnt += 1;
         // Get terminal size
         ioctl(STDOUT_FILENO, TIOCGWINSZ, &termSize); // This only works on Unix
         
