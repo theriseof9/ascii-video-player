@@ -3,16 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		546DFDDA2665C34C0005F05E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 546DFDD92665C34C0005F05E /* main.cpp */; };
 		DA65A3D826661A4200546D16 /* colorUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA65A3D626661A4200546D16 /* colorUtil.cpp */; };
-		DA8BB6382667425E003B41C2 /* audioSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA8BB6362667425E003B41C2 /* audioSupport.cpp */; };
-		DA8BB640266743BA003B41C2 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA8BB63C26674369003B41C2 /* libavcodec.a */; };
-		DA8BB641266743BA003B41C2 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA8BB63E26674369003B41C2 /* libavformat.a */; };
-		DA8BB642266743BA003B41C2 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA8BB63B26674369003B41C2 /* libavutil.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,8 +29,6 @@
 		546DFDE02665D4D00005F05E /* video-to-ascii.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "video-to-ascii.entitlements"; sourceTree = "<group>"; };
 		DA65A3D626661A4200546D16 /* colorUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = colorUtil.cpp; sourceTree = "<group>"; };
 		DA65A3D726661A4200546D16 /* colorUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = colorUtil.hpp; sourceTree = "<group>"; };
-		DA8BB6362667425E003B41C2 /* audioSupport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audioSupport.cpp; sourceTree = "<group>"; };
-		DA8BB6372667425E003B41C2 /* audioSupport.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = audioSupport.hpp; sourceTree = "<group>"; };
 		DA8BB63A266742EF003B41C2 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib; sourceTree = "<group>"; };
 		DA8BB63B26674369003B41C2 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavutil.a; sourceTree = "<group>"; };
 		DA8BB63C26674369003B41C2 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavcodec.a; sourceTree = "<group>"; };
@@ -42,6 +36,40 @@
 		DA8BB63E26674369003B41C2 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavformat.a; sourceTree = "<group>"; };
 		DA8BB63F26674369003B41C2 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libswresample.a; sourceTree = "<group>"; };
 		DA8BB643266743BB003B41C2 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavdevice.a; sourceTree = "<group>"; };
+		DA8BB64726674FEF003B41C2 /* MediaList.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MediaList.hpp; sourceTree = "<group>"; };
+		DA8BB64826674FEF003B41C2 /* Internal.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Internal.hpp; sourceTree = "<group>"; };
+		DA8BB64926674FEF003B41C2 /* structures.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = structures.hpp; sourceTree = "<group>"; };
+		DA8BB64A26674FEF003B41C2 /* Instance.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Instance.hpp; sourceTree = "<group>"; };
+		DA8BB64B26674FEF003B41C2 /* EventManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EventManager.hpp; sourceTree = "<group>"; };
+		DA8BB64C26674FEF003B41C2 /* MediaPlayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MediaPlayer.hpp; sourceTree = "<group>"; };
+		DA8BB64D26674FEF003B41C2 /* Equalizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Equalizer.hpp; sourceTree = "<group>"; };
+		DA8BB64E26674FF0003B41C2 /* common.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = common.hpp; sourceTree = "<group>"; };
+		DA8BB64F26674FF0003B41C2 /* MediaDiscoverer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MediaDiscoverer.hpp; sourceTree = "<group>"; };
+		DA8BB65026674FF0003B41C2 /* Media.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Media.hpp; sourceTree = "<group>"; };
+		DA8BB65126674FF0003B41C2 /* Picture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Picture.hpp; sourceTree = "<group>"; };
+		DA8BB65226674FF0003B41C2 /* MediaListPlayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MediaListPlayer.hpp; sourceTree = "<group>"; };
+		DA8BB65326674FF0003B41C2 /* MediaLibrary.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MediaLibrary.hpp; sourceTree = "<group>"; };
+		DA8BB65426674FF0003B41C2 /* vlc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vlc.hpp; sourceTree = "<group>"; };
+		DA8BB65526674FF0003B41C2 /* Dialog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dialog.hpp; sourceTree = "<group>"; };
+		DA8BB65626674FF0003B41C2 /* RendererDiscoverer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RendererDiscoverer.hpp; sourceTree = "<group>"; };
+		DA8BB6582667647F003B41C2 /* libvlccore.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvlccore.9.dylib; path = ../../../../../../../usr/local/Cellar/vlc/lib/libvlccore.9.dylib; sourceTree = "<group>"; };
+		DA8BB6592667647F003B41C2 /* libvlc.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvlc.5.dylib; path = ../../../../../../../usr/local/Cellar/vlc/lib/libvlc.5.dylib; sourceTree = "<group>"; };
+		DA8BB66626676550003B41C2 /* libvlc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvlc.dylib; path = "video-to-ascii/libvlc.dylib"; sourceTree = "<group>"; };
+		DA8BB66726676550003B41C2 /* libvlccore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvlccore.dylib; path = "video-to-ascii/libvlccore.dylib"; sourceTree = "<group>"; };
+		DA8BB676266772CF003B41C2 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../../usr/local/Cellar/sdl2/2.0.14_1/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
+		DA8BB6822667A5DB003B41C2 /* pkgconfig */ = {isa = PBXFileReference; lastKnownFileType = folder; name = pkgconfig; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/pkgconfig; sourceTree = "<group>"; };
+		DA8BB6892667A5F3003B41C2 /* libavcodec.58.134.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.58.134.100.dylib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavcodec.58.134.100.dylib; sourceTree = "<group>"; };
+		DA8BB68A2667A5F3003B41C2 /* libavutil.56.70.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavutil.56.70.100.dylib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavutil.56.70.100.dylib; sourceTree = "<group>"; };
+		DA8BB68B2667A5F3003B41C2 /* libpostproc.55.9.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpostproc.55.9.100.dylib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libpostproc.55.9.100.dylib; sourceTree = "<group>"; };
+		DA8BB68C2667A5F3003B41C2 /* libavresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavresample.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavresample.a; sourceTree = "<group>"; };
+		DA8BB68D2667A5F3003B41C2 /* libswscale.5.9.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswscale.5.9.100.dylib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libswscale.5.9.100.dylib; sourceTree = "<group>"; };
+		DA8BB68E2667A5F3003B41C2 /* libswresample.3.9.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswresample.3.9.100.dylib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libswresample.3.9.100.dylib; sourceTree = "<group>"; };
+		DA8BB68F2667A5F3003B41C2 /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libpostproc.a; sourceTree = "<group>"; };
+		DA8BB6902667A5F3003B41C2 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavfilter.a; sourceTree = "<group>"; };
+		DA8BB6912667A5F3003B41C2 /* libavresample.4.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavresample.4.0.0.dylib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavresample.4.0.0.dylib; sourceTree = "<group>"; };
+		DA8BB6922667A5F3003B41C2 /* libavfilter.7.110.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavfilter.7.110.100.dylib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavfilter.7.110.100.dylib; sourceTree = "<group>"; };
+		DA8BB6932667A5F3003B41C2 /* libavformat.58.76.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavformat.58.76.100.dylib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavformat.58.76.100.dylib; sourceTree = "<group>"; };
+		DA8BB6942667A5F3003B41C2 /* libavdevice.58.13.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavdevice.58.13.100.dylib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavdevice.58.13.100.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,9 +77,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA8BB642266743BA003B41C2 /* libavutil.a in Frameworks */,
-				DA8BB640266743BA003B41C2 /* libavcodec.a in Frameworks */,
-				DA8BB641266743BA003B41C2 /* libavformat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,12 +103,11 @@
 		546DFDD82665C34C0005F05E /* video-to-ascii */ = {
 			isa = PBXGroup;
 			children = (
+				DA8BB65726675003003B41C2 /* vlcpp */,
 				546DFDE02665D4D00005F05E /* video-to-ascii.entitlements */,
 				546DFDD92665C34C0005F05E /* main.cpp */,
 				DA65A3D626661A4200546D16 /* colorUtil.cpp */,
 				DA65A3D726661A4200546D16 /* colorUtil.hpp */,
-				DA8BB6362667425E003B41C2 /* audioSupport.cpp */,
-				DA8BB6372667425E003B41C2 /* audioSupport.hpp */,
 			);
 			path = "video-to-ascii";
 			sourceTree = "<group>";
@@ -91,6 +115,24 @@
 		DA8BB639266742EF003B41C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DA8BB6892667A5F3003B41C2 /* libavcodec.58.134.100.dylib */,
+				DA8BB6942667A5F3003B41C2 /* libavdevice.58.13.100.dylib */,
+				DA8BB6922667A5F3003B41C2 /* libavfilter.7.110.100.dylib */,
+				DA8BB6902667A5F3003B41C2 /* libavfilter.a */,
+				DA8BB6932667A5F3003B41C2 /* libavformat.58.76.100.dylib */,
+				DA8BB6912667A5F3003B41C2 /* libavresample.4.0.0.dylib */,
+				DA8BB68C2667A5F3003B41C2 /* libavresample.a */,
+				DA8BB68A2667A5F3003B41C2 /* libavutil.56.70.100.dylib */,
+				DA8BB68B2667A5F3003B41C2 /* libpostproc.55.9.100.dylib */,
+				DA8BB68F2667A5F3003B41C2 /* libpostproc.a */,
+				DA8BB68E2667A5F3003B41C2 /* libswresample.3.9.100.dylib */,
+				DA8BB68D2667A5F3003B41C2 /* libswscale.5.9.100.dylib */,
+				DA8BB6822667A5DB003B41C2 /* pkgconfig */,
+				DA8BB676266772CF003B41C2 /* libSDL2-2.0.0.dylib */,
+				DA8BB66626676550003B41C2 /* libvlc.dylib */,
+				DA8BB66726676550003B41C2 /* libvlccore.dylib */,
+				DA8BB6592667647F003B41C2 /* libvlc.5.dylib */,
+				DA8BB6582667647F003B41C2 /* libvlccore.9.dylib */,
 				DA8BB643266743BB003B41C2 /* libavdevice.a */,
 				DA8BB63C26674369003B41C2 /* libavcodec.a */,
 				DA8BB63E26674369003B41C2 /* libavformat.a */,
@@ -100,6 +142,29 @@
 				DA8BB63A266742EF003B41C2 /* lib */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DA8BB65726675003003B41C2 /* vlcpp */ = {
+			isa = PBXGroup;
+			children = (
+				DA8BB64E26674FF0003B41C2 /* common.hpp */,
+				DA8BB65526674FF0003B41C2 /* Dialog.hpp */,
+				DA8BB64D26674FEF003B41C2 /* Equalizer.hpp */,
+				DA8BB64B26674FEF003B41C2 /* EventManager.hpp */,
+				DA8BB64A26674FEF003B41C2 /* Instance.hpp */,
+				DA8BB64826674FEF003B41C2 /* Internal.hpp */,
+				DA8BB65026674FF0003B41C2 /* Media.hpp */,
+				DA8BB64F26674FF0003B41C2 /* MediaDiscoverer.hpp */,
+				DA8BB65326674FF0003B41C2 /* MediaLibrary.hpp */,
+				DA8BB64726674FEF003B41C2 /* MediaList.hpp */,
+				DA8BB65226674FF0003B41C2 /* MediaListPlayer.hpp */,
+				DA8BB64C26674FEF003B41C2 /* MediaPlayer.hpp */,
+				DA8BB65126674FF0003B41C2 /* Picture.hpp */,
+				DA8BB65626674FF0003B41C2 /* RendererDiscoverer.hpp */,
+				DA8BB64926674FEF003B41C2 /* structures.hpp */,
+				DA8BB65426674FF0003B41C2 /* vlc.hpp */,
+			);
+			path = vlcpp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,7 +201,7 @@
 				};
 			};
 			buildConfigurationList = 546DFDD12665C34C0005F05E /* Build configuration list for PBXProject "video-to-ascii" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -158,7 +223,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA8BB6382667425E003B41C2 /* audioSupport.cpp in Sources */,
 				546DFDDA2665C34C0005F05E /* main.cpp in Sources */,
 				DA65A3D826661A4200546D16 /* colorUtil.cpp in Sources */,
 			);
@@ -218,14 +282,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
-					/usr/local/Cellar/ffmpeg/4.4_1/include,
-				);
-				LIBRARY_SEARCH_PATHS = (
-					/usr/local/Cellar/opencv/4.5.2_4/lib,
-					/usr/local/Cellar/ffmpeg/4.4_1/lib,
-				);
+				HEADER_SEARCH_PATHS = /usr/local/Cellar/opencv/4.5.2_4/include/opencv4;
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/opencv/4.5.2_4/lib;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -280,14 +338,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
-					/usr/local/Cellar/ffmpeg/4.4_1/include,
-				);
-				LIBRARY_SEARCH_PATHS = (
-					/usr/local/Cellar/opencv/4.5.2_4/lib,
-					/usr/local/Cellar/ffmpeg/4.4_1/lib,
-				);
+				HEADER_SEARCH_PATHS = /usr/local/Cellar/opencv/4.5.2_4/include/opencv4;
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/opencv/4.5.2_4/lib;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -305,11 +357,15 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
+					/usr/local/Cellar/vlc/include,
+					/usr/local/Cellar/sdl2/2.0.14_1/include,
 					/usr/local/Cellar/ffmpeg/4.4_1/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/Cellar/opencv/4.5.2_4/lib,
-					/usr/local/Cellar/ffmpeg/4.4_1/lib,
+					/usr/local/Cellar/vlc/lib,
+					"$(PROJECT_DIR)/video-to-ascii",
+					/usr/local/Cellar/sdl2/2.0.14_1/lib,
 				);
 				OTHER_LDFLAGS = (
 					"-lopencv_gapi",
@@ -366,7 +422,8 @@
 					"-lopencv_xphoto",
 					"-lopencv_photo",
 					"-lopencv_imgproc",
-					"-lopencv_core\n-lopencv_gapi",
+					"-lopencv_core",
+					"-lopencv_gapi",
 					"-lopencv_stitching",
 					"-lopencv_alphamat",
 					"-lopencv_aruco",
@@ -420,7 +477,7 @@
 					"-lopencv_xphoto",
 					"-lopencv_photo",
 					"-lopencv_imgproc",
-					"-lopencv_core\n",
+					"-lopencv_core",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -436,11 +493,15 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
+					/usr/local/Cellar/vlc/include,
+					/usr/local/Cellar/sdl2/2.0.14_1/include,
 					/usr/local/Cellar/ffmpeg/4.4_1/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/Cellar/opencv/4.5.2_4/lib,
-					/usr/local/Cellar/ffmpeg/4.4_1/lib,
+					/usr/local/Cellar/vlc/lib,
+					"$(PROJECT_DIR)/video-to-ascii",
+					/usr/local/Cellar/sdl2/2.0.14_1/lib,
 				);
 				OTHER_LDFLAGS = (
 					"-lopencv_gapi",
@@ -497,7 +558,8 @@
 					"-lopencv_xphoto",
 					"-lopencv_photo",
 					"-lopencv_imgproc",
-					"-lopencv_core\n-lopencv_gapi",
+					"-lopencv_core",
+					"-lopencv_gapi",
 					"-lopencv_stitching",
 					"-lopencv_alphamat",
 					"-lopencv_aruco",
@@ -551,7 +613,7 @@
 					"-lopencv_xphoto",
 					"-lopencv_photo",
 					"-lopencv_imgproc",
-					"-lopencv_core\n",
+					"-lopencv_core",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
