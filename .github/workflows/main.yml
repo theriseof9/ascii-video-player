@@ -18,6 +18,9 @@ jobs:
     - name: Copy ffplay binary to /usr/local/bin
       run: cp ./ffplay /usr/local/bin/ffplay
       
+    - name: Install OpenCV from Brew
+      run: brew install opencv
+      
     - name: Xcode Build
       uses: devbotsxyz/xcode-build@v1.0.0
       with:
