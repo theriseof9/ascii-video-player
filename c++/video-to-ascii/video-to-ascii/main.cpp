@@ -32,10 +32,12 @@ const string DENSITY[] = {
 // MARK: Globals
 struct winsize termSize;
 vector<string> buffer;
+bool lock_buff = false;
 
 // MARK:- Renderer function, running async
 
 void decToAscii(VideoCapture cap) {
+    lock_buff = true;
     while (1) {
         Mat frame;
         // Capture frame-by-frame
@@ -65,7 +67,9 @@ void decToAscii(VideoCapture cap) {
             }
             if (i != frame.rows - 1) buffer[buffer.size()-1] += "\n";
         }
+        buffer.shrink_to_fit();
     }
+    lock_buff = false;
 }
 
 // MARK:- Audio playback thread
@@ -120,22 +124,24 @@ int main() {
     thread audioThread(playAudio, HOME + vidPath); // Start audio thread
     
     unsigned int i = 0;
-    
+    const auto t1 = high_resolution_clock::now();
+
     while (1) {
-        const auto t1 = high_resolution_clock::now();
         // printf("\033c");
         cout << buffer[i];
+        buffer[i] = "";
+        
         i++;
         if (i > buffer.size()) break;
         // Press ESC on keyboard to exit
         // char c = (char) waitKey(5);
         // if (c == 27) break;
         const auto t2 = high_resolution_clock::now();
-        const auto dur = duration_cast<microseconds>(t2 - t1).count();
+        const auto dur = (targetDelay * (i + 1)) - (t2 - t1);
         // struct timespec delayTime;
         // delayTime.tv_nsec = (targetDelay - dur) * 1000;
         
-        if (dur >= 0) this_thread::sleep_for(targetDelay - (t2 - t1));
+        if (dur >= 0ms) this_thread::sleep_for(dur);
     }
     cout << "End of video, thanks for watching!" << endl;
     
