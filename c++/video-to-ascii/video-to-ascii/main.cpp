@@ -10,7 +10,7 @@
 #include <thread>
 #include <chrono>
 #include <time.h>
-
+#include <mutex>
 // Utilities
 #include "colorUtil.hpp"
 
@@ -18,25 +18,28 @@
 #include <sys/ioctl.h> //ioctl() and TIOCGWINSZ
 #include <unistd.h> // for STDOUT_FILENO
 
+#define MAXBUFFER 200000
+
 using namespace std;
 using namespace cv;
 using namespace std::chrono;
 
-// ========= //
-// Constants //
+// MARK: Constants
 const string DENSITY[] = {
     " ", " ", ".", ":", "!", "+", "*", "e", "$", "@", "8",
     ".", "*", "e", "s", "◍",
     "░", "▒", "▓", "█"
 };
 
-// ======= //
-// Globals //
+// MARK: Globals
 struct winsize termSize;
 vector<string> buffer;
+bool lock_buff = false;
 
 // MARK:- Renderer function, running async
+
 void decToAscii(VideoCapture cap) {
+    int cnt = 0;
     while (1) {
         Mat frame;
         // Capture frame-by-frame
@@ -51,9 +54,11 @@ void decToAscii(VideoCapture cap) {
         uint8_t* pixelPtr = (uint8_t*)frame.data;
         int cn = frame.channels();
         Scalar_<uint8_t> bgrPixel;
-        
+        cnt += 1;
         buffer.push_back("");
-        buffer[buffer.size()-1] += "\u001b[" + to_string(termSize.ws_col) + "D\u001b[" + to_string(termSize.ws_row) + "A";
+        if (buffer.size()>0) {
+            buffer[buffer.size()-1] += "\u001b[" + to_string(termSize.ws_col) + "D\u001b[" + to_string(termSize.ws_row) + "A";
+        }
         for (int i = 0; i < frame.rows; i++) {
             for (int j = 0; j < frame.cols; j++) {
                 bgrPixel.val[2] = pixelPtr[i * frame.cols * cn + j * cn + 0]; // B
@@ -61,15 +66,35 @@ void decToAscii(VideoCapture cap) {
                 bgrPixel.val[0] = pixelPtr[i * frame.cols * cn + j * cn + 2]; // R
 
                 // do something with RGB values...
-                const uint8_t intensity = (bgrPixel[0] + bgrPixel[1] + bgrPixel[2]) / 60;
-                buffer[buffer.size()-1] += "\u001b[38;5;" + to_string(getColorId(bgrPixel[0], bgrPixel[1], bgrPixel[2])) + "m" + DENSITY[intensity];
+                const uint8_t intensity = (bgrPixel[0] + bgrPixel[1] + bgrPixel[2]) / 40.26;
+                if (buffer.size()>0) {
+                    buffer[buffer.size()-1] += "\u001b[38;5;" + to_string(getColorId(bgrPixel[0], bgrPixel[1], bgrPixel[2])) + "m" + DENSITY[intensity];
+                }
             }
-            if (i != frame.rows - 1) buffer[buffer.size()-1] += "\n";
+            if (i != frame.rows - 1&&buffer.size()>0) buffer[buffer.size()-1] += "\n";
+        }
+        if (cnt > MAXBUFFER) {
+            cnt = 0;
+            // lock_buff = true;
+            mutex mtx;
+            std::unique_lock<mutex> lck(mtx);
+            mtx.lock();
+            buffer.shrink_to_fit();
+            mtx.unlock();
+            // lock_buff = false;
         }
     }
 }
 
+// MARK:- Audio playback thread
+// Its sole purpose is to start the ffplay program
+
+void playAudio(string path) {
+    system(("ffplay -vn -nodisp " + path + " 2>/dev/null").c_str());
+}
+
 // MARK:- Termination Handler
+
 void sigCleanUp(int signum) {
     cout << "\u001b[0mThanks, and goodbye!" << endl;
     
@@ -77,6 +102,7 @@ void sigCleanUp(int signum) {
 }
 
 // MARK:- Main
+
 int main() {
     // Fast IO speed
     cout.tie(0);
@@ -109,22 +135,34 @@ int main() {
     cout << "Performing initial buffering, please wait a second..." << endl;
     sleep(1);
     
-    unsigned int i = 0;
+    thread audioThread(playAudio, HOME + vidPath); // Start audio thread
     
+    unsigned int i = 0;
+    int bufferDiff = 0;
+    const auto t1 = high_resolution_clock::now();
     while (1) {
-        const auto t1 = high_resolution_clock::now();
-        cout << buffer[i];
+        while (bufferDiff>=(buffer.size()-2)||buffer.size()<=2){}
+        if (buffer.size()>0) cout << buffer[bufferDiff];
+
+        /* printf("\033c");
+        // if (!lock_buff) {
+            // if (bufferDiff >= buffer.size()-5) {
+                break;
+         } else {*/if (buffer.size()>0) buffer.erase(buffer.begin(),buffer.begin()+1);/*}
+            bufferDiff = 0;
+        } else {
+            bufferDiff += 1;
+        }*/
         i++;
-        if (i > buffer.size()) break;
+        // if (i > buffer.size()) break;
         // Press ESC on keyboard to exit
         // char c = (char) waitKey(5);
         // if (c == 27) break;
         const auto t2 = high_resolution_clock::now();
-        const auto dur = duration_cast<microseconds>(t2 - t1).count();
+        const auto dur = (targetDelay * (i + 1)) - (t2 - t1);
         // struct timespec delayTime;
         // delayTime.tv_nsec = (targetDelay - dur) * 1000;
-        
-        if (dur >= 0) this_thread::sleep_for(targetDelay - (t2 - t1));
+        if (dur>=0ms) this_thread::sleep_for(dur);
     }
     cout << "End of video, thanks for watching!" << endl;
     
