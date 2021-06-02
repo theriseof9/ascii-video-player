@@ -10,6 +10,8 @@
 #include <thread>
 #include <chrono>
 #include <time.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 
 // Utilities
 #include "colorUtil.hpp"
@@ -18,9 +20,13 @@
 #include <sys/ioctl.h> //ioctl() and TIOCGWINSZ
 #include <unistd.h> // for STDOUT_FILENO
 
+// Namespaces
 using namespace std;
 using namespace cv;
 using namespace std::chrono;
+
+// MARK: Definitions
+#define MAX_SYNC_OFFSET 10s
 
 // MARK: Constants
 const string DENSITY[] = {
@@ -127,9 +133,15 @@ int main() {
         
         unsigned int i = 0;
         const auto t1 = high_resolution_clock::now();
+        chrono::duration<double, milli> syncTime = 0ms;
 
         while (1) {
             // printf("\033c");
+            if (syncTime > targetDelay) {
+                i++;
+                syncTime -= targetDelay;
+            }
+            
             cout << buffer[i];
             buffer[i] = "";
             
@@ -142,8 +154,14 @@ int main() {
             const auto dur = (targetDelay * (i + 1)) - (t2 - t1);
             // struct timespec delayTime;
             // delayTime.tv_nsec = (targetDelay - dur) * 1000;
-            
-            if (dur >= 0ms) this_thread::sleep_for(dur);
+                        
+            if (dur >= 0ms) {
+                this_thread::sleep_for(dur);
+                syncTime = 0ms;
+            }
+            else {
+                syncTime = -dur;
+            }
         }
         cout << "End of video, thanks for watching!" << endl;
         
@@ -165,7 +183,12 @@ int main() {
             NULL
         };
         // we are the child
+        
+        // Redirect stderr to /dev/null
+        const int fd = open("/dev/null", O_WRONLY | O_CREAT, 0666);
+        dup2(fd, 2); // Change stderr to opened file
         execve("/usr/local/bin/ffplay", args, {});
+        close(fd); // Close file (although this will never happen)
         _exit(EXIT_FAILURE);   // exec never returns
     }
     
