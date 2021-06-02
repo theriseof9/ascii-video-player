@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		546DFDDA2665C34C0005F05E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 546DFDD92665C34C0005F05E /* main.cpp */; };
 		DA65A3D826661A4200546D16 /* colorUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA65A3D626661A4200546D16 /* colorUtil.cpp */; };
+		DA8BB6382667425E003B41C2 /* audioSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA8BB6362667425E003B41C2 /* audioSupport.cpp */; };
+		DA8BB640266743BA003B41C2 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA8BB63C26674369003B41C2 /* libavcodec.a */; };
+		DA8BB641266743BA003B41C2 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA8BB63E26674369003B41C2 /* libavformat.a */; };
+		DA8BB642266743BA003B41C2 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA8BB63B26674369003B41C2 /* libavutil.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +33,15 @@
 		546DFDE02665D4D00005F05E /* video-to-ascii.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "video-to-ascii.entitlements"; sourceTree = "<group>"; };
 		DA65A3D626661A4200546D16 /* colorUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = colorUtil.cpp; sourceTree = "<group>"; };
 		DA65A3D726661A4200546D16 /* colorUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = colorUtil.hpp; sourceTree = "<group>"; };
+		DA8BB6362667425E003B41C2 /* audioSupport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audioSupport.cpp; sourceTree = "<group>"; };
+		DA8BB6372667425E003B41C2 /* audioSupport.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = audioSupport.hpp; sourceTree = "<group>"; };
+		DA8BB63A266742EF003B41C2 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib; sourceTree = "<group>"; };
+		DA8BB63B26674369003B41C2 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavutil.a; sourceTree = "<group>"; };
+		DA8BB63C26674369003B41C2 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavcodec.a; sourceTree = "<group>"; };
+		DA8BB63D26674369003B41C2 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libswscale.a; sourceTree = "<group>"; };
+		DA8BB63E26674369003B41C2 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavformat.a; sourceTree = "<group>"; };
+		DA8BB63F26674369003B41C2 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libswresample.a; sourceTree = "<group>"; };
+		DA8BB643266743BB003B41C2 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavdevice.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +49,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA8BB642266743BA003B41C2 /* libavutil.a in Frameworks */,
+				DA8BB640266743BA003B41C2 /* libavcodec.a in Frameworks */,
+				DA8BB641266743BA003B41C2 /* libavformat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +63,7 @@
 			children = (
 				546DFDD82665C34C0005F05E /* video-to-ascii */,
 				546DFDD72665C34C0005F05E /* Products */,
+				DA8BB639266742EF003B41C2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,8 +82,24 @@
 				546DFDD92665C34C0005F05E /* main.cpp */,
 				DA65A3D626661A4200546D16 /* colorUtil.cpp */,
 				DA65A3D726661A4200546D16 /* colorUtil.hpp */,
+				DA8BB6362667425E003B41C2 /* audioSupport.cpp */,
+				DA8BB6372667425E003B41C2 /* audioSupport.hpp */,
 			);
 			path = "video-to-ascii";
+			sourceTree = "<group>";
+		};
+		DA8BB639266742EF003B41C2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DA8BB643266743BB003B41C2 /* libavdevice.a */,
+				DA8BB63C26674369003B41C2 /* libavcodec.a */,
+				DA8BB63E26674369003B41C2 /* libavformat.a */,
+				DA8BB63B26674369003B41C2 /* libavutil.a */,
+				DA8BB63F26674369003B41C2 /* libswresample.a */,
+				DA8BB63D26674369003B41C2 /* libswscale.a */,
+				DA8BB63A266742EF003B41C2 /* lib */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA8BB6382667425E003B41C2 /* audioSupport.cpp in Sources */,
 				546DFDDA2665C34C0005F05E /* main.cpp in Sources */,
 				DA65A3D826661A4200546D16 /* colorUtil.cpp in Sources */,
 			);
@@ -184,8 +218,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/local/Cellar/opencv/4.5.2_4/include/opencv4;
-				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/opencv/4.5.2_4/lib;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
+					/usr/local/Cellar/ffmpeg/4.4_1/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/opencv/4.5.2_4/lib,
+					/usr/local/Cellar/ffmpeg/4.4_1/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -240,8 +280,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/local/Cellar/opencv/4.5.2_4/include/opencv4;
-				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/opencv/4.5.2_4/lib;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
+					/usr/local/Cellar/ffmpeg/4.4_1/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/opencv/4.5.2_4/lib,
+					/usr/local/Cellar/ffmpeg/4.4_1/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -259,11 +305,11 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
-					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
+					/usr/local/Cellar/ffmpeg/4.4_1/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/Cellar/opencv/4.5.2_4/lib,
-					/usr/local/Cellar/opencv/4.5.2_4/lib,
+					/usr/local/Cellar/ffmpeg/4.4_1/lib,
 				);
 				OTHER_LDFLAGS = (
 					"-lopencv_gapi",
@@ -390,11 +436,11 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
-					/usr/local/Cellar/opencv/4.5.2_4/include/opencv4,
+					/usr/local/Cellar/ffmpeg/4.4_1/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/Cellar/opencv/4.5.2_4/lib,
-					/usr/local/Cellar/opencv/4.5.2_4/lib,
+					/usr/local/Cellar/ffmpeg/4.4_1/lib,
 				);
 				OTHER_LDFLAGS = (
 					"-lopencv_gapi",
