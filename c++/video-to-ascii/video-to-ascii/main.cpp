@@ -60,7 +60,7 @@ void decToAscii(VideoCapture cap) {
                 bgrPixel.val[0] = pixelPtr[i * frame.cols * cn + j * cn + 2]; // R
 
                 // do something with RGB values...
-                const uint8_t intensity = (bgrPixel[0] + bgrPixel[1] + bgrPixel[2]) / 60;
+                const uint8_t intensity = (bgrPixel[0] + bgrPixel[1] + bgrPixel[2]) / 40.26;
                 buffer[buffer.size()-1] += "\u001b[38;5;" + to_string(getColorId(bgrPixel[0], bgrPixel[1], bgrPixel[2])) + "m" + DENSITY[intensity];
             }
             if (i != frame.rows - 1) buffer[buffer.size()-1] += "\n";
