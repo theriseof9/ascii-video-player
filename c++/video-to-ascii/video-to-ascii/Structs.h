@@ -15,7 +15,13 @@ using namespace std;
 struct FlagActions {
     string flag;
     string description;
+    bool isAct;
     void (*fAct)();
+};
+
+struct FlagOps {
+    string flag;
+    string val;
 };
 
 #endif /* Structs_h */
