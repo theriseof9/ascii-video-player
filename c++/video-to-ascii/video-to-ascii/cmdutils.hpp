@@ -29,7 +29,7 @@ using namespace std::chrono;
 #define DEBUG_STR   "🐛  Debug"
 #define INFO_STR    "ℹ️  Info"
 #define WARN_STR    "⚠️  Warning"
-#define ERROR_STR   "❌  ERROR"
+#define ERROR_STR   "❌ ERROR"
 #define FATAL_STR   "☠️  FATAL"
 // Log colors
 #define VERBOSE_COL "\u001b[30;1m" // Grey
@@ -38,7 +38,10 @@ using namespace std::chrono;
 #define WARN_COL    "\u001b[33;1m" // Yellow
 #define ERROR_COL   "\u001b[35;1m" // Magenta
 #define FATAL_COL   "\u001b[31;1m" // Red
+// Version strings
+#define VERSION_STR "0.5.0"
 
 void writeMsg(string msg, uint8_t level);
+void writeBanner();
 
 #endif /* cmdutils_hpp */
