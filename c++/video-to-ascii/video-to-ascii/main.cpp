@@ -62,6 +62,7 @@ void decToAscii(VideoCapture cap) {
         int cn = frame.channels();
         Scalar_<uint8_t> bgrPixel;
         
+        if (halt_loop) return;
         buffer.push_back("");
         buffer[buffer.size()-1] += "\u001b[" + to_string(termSize.ws_col) + "D\u001b[" + to_string(termSize.ws_row) + "A";
         for (int i = 0; i < frame.rows; i++) {
