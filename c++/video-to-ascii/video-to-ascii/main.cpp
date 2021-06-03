@@ -176,11 +176,12 @@ int main(int argc, char** argv) {
         cleanUp(-1);
     }
     
+    // MARK: Fork parent process
     pid_t pid = fork();
 
     if (pid == -1) {
-        // error, failed to fork()
-        writeMsg("Failed to fork main process", LOG_FATAL);
+        // Error, failed to fork()
+        writeMsg("Failed to fork parent process", LOG_FATAL);
         cleanUp(123);
     }
     // MARK:- Parent thread
