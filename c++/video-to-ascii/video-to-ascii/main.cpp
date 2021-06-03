@@ -152,9 +152,10 @@ int main(int argc, char** argv) {
     scn_col = termSize.ws_col;
     scn_row = termSize.ws_row;
     
-    // Parse command line flags
+    // MARK: Parse command line flags
     const vector<FlagOps> cmdFlags = parseArgs(argc, argv, fActs, 3);
     
+    // Handle option flags
     for (uint16_t i = 0; i < cmdFlags.size(); i++) {
         // cout << "Flag: " << cmdFlags[i].flag << ", value: " << cmdFlags[i].val;
         const auto f = cmdFlags[i];
@@ -167,9 +168,9 @@ int main(int argc, char** argv) {
         cleanUp(-1);
     }
     
+    // MARK: Retrieve absolute path from user-entered relative path
     char pathBuff[PATH_MAX];
     char* absPath = realpath(argv[argc - 1], pathBuff);
-    
     if (!absPath) {
         writeMsg("Failed to determine absolute video path", LOG_FATAL);
         cleanUp(-1);
@@ -182,10 +183,8 @@ int main(int argc, char** argv) {
         writeMsg("Failed to fork main process", LOG_FATAL);
         cleanUp(123);
     }
+    // MARK:- Parent thread
     else if (pid > 0) {
-        // Parent thread
-        // HOME + vidPath
-        
         // Redirect CV2 errors
         redirectError(handleCV2Error);
         VideoCapture cap(absPath);
@@ -196,10 +195,12 @@ int main(int argc, char** argv) {
             cleanUp(-1);
         }
         
+        // Calculate target time spent on one frame
         const auto targetDelay = 1000ms / cap.get(CAP_PROP_FPS);
         
         thread decThread(decToAscii, cap); // Start renderer thread
         
+        // MARK: Write banner and loading text to console
         writeBanner();
         writeMsg("Performing initial buffering, please wait a second...", LOG_INFO);
         sleep(1);
@@ -215,28 +216,16 @@ int main(int argc, char** argv) {
         // Clear terminal
         system("clear && printf '\e[3J'");
 
+        // MARK:- Main display loop
         while (!halt_loop) {
-            // printf("\033c");
-            
-            // cout << buffer[i];
             fputs(buffer[i].c_str(), stdout);
-            
-            // fwrite(buffer[i].c_str(), 1, sizeof(buffer[i].c_str()) - 1, stdout);
-            // fflush(stdout);
-
             // buffer[i] = "";
             
             i++;
             if (i > buffer.size()) break;
-            // Press ESC on keyboard to exit
-            // char c = (char) waitKey(5);
-            // if (c == 27) break;
+            
             const auto t2 = high_resolution_clock::now();
             const auto dur = (targetDelay * (i + 1)) - (t2 - t1);
-            // struct timespec delayTime;
-            // delayTime.tv_nsec = (targetDelay - dur) * 1000;
-            
-            // cout << "Duration: " << dur.count() << endl;
                         
             if (dur >= 0ms) this_thread::sleep_for(dur);
             else if ((-dur) >= MAX_SYNC_OFFSET) {
@@ -258,8 +247,8 @@ int main(int argc, char** argv) {
         
         cleanUp(0, true);
     }
+    // MARK:- Child thread
     else {
-        // This is the child thread
         sleep(1); // Ensure playback starts at the same time
         
         string path(absPath);
