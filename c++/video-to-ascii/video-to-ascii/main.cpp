@@ -15,6 +15,7 @@
 
 // Utilities
 #include "colorUtil.hpp"
+#include "cmdutils.hpp"
 
 // Finding terminal size
 #include <sys/ioctl.h> //ioctl() and TIOCGWINSZ
@@ -39,12 +40,14 @@ const string DENSITY[] = {
 struct winsize termSize;
 vector<string> buffer;
 bool lock_buff = false;
+bool halt_loop = false;
+uint32_t skippedFrames = 0;
 
 // MARK:- Renderer function, running async
 
 void decToAscii(VideoCapture cap) {
     lock_buff = true;
-    while (1) {
+    while (!halt_loop) {
         Mat frame;
         // Capture frame-by-frame
         cap >> frame;
@@ -81,7 +84,17 @@ void decToAscii(VideoCapture cap) {
 // MARK:- Termination Handler
 
 void sigCleanUp(int signum) {
-    cout << "\u001b[0mThanks, and goodbye!" << endl;
+    halt_loop = true;
+    
+    // Restore cursor
+    system("tput cvvis");
+    
+    // Clear terminal
+    system("clear && printf '\e[3J'");
+
+    cout << "\u001b[0m"; // Reset color
+    if (skippedFrames != 0) writeMsg("Skipped " + to_string(skippedFrames) + " frame(s)", LOG_WARN);
+    writeMsg("Goodbye!", LOG_INFO);
     
     exit(signum);
 }
@@ -109,16 +122,17 @@ int main() {
 
     if (pid == -1) {
         // error, failed to fork()
-        cout << "Fatal error: Failed to fork main process" << endl;
+        writeMsg("Failed to fork main process", LOG_FATAL);
         exit(123);
     }
     else if (pid > 0) {
+        // Parent thread
         // HOME + vidPath
         VideoCapture cap(HOME + vidPath);
         
         // Check if camera was opened successfully
         if (!cap.isOpened()) {
-            cout << "Error opening video file, check if file exists" << endl;
+            writeMsg("Error opening video file, check if file exists", LOG_FATAL);
             exit(-1);
         }
         
@@ -126,24 +140,28 @@ int main() {
         
         thread decThread(decToAscii, cap); // Start renderer thread
         
-        cout << "Performing initial buffering, please wait a second..." << endl;
+        writeMsg("Performing initial buffering, please wait a second...", LOG_INFO);
         sleep(1);
         
         // thread audioThread(playAudio, HOME + vidPath); // Start audio thread
         
         unsigned int i = 0;
         const auto t1 = high_resolution_clock::now();
-        chrono::duration<double, milli> syncTime = 0ms;
+        // chrono::duration<double, milli> syncTime = 0ms;
+        
+        // Hide cursor
+        system("tput civis");
 
-        while (1) {
+        while (!halt_loop) {
             // printf("\033c");
-            if (syncTime > targetDelay) {
-                i++;
-                syncTime -= targetDelay;
-            }
             
-            cout << buffer[i];
-            buffer[i] = "";
+            // cout << buffer[i];
+            fputs(buffer[i].c_str(), stdout);
+            
+            // fwrite(buffer[i].c_str(), 1, sizeof(buffer[i].c_str()) - 1, stdout);
+            // fflush(stdout);
+
+            // buffer[i] = "";
             
             i++;
             if (i > buffer.size()) break;
@@ -154,13 +172,14 @@ int main() {
             const auto dur = (targetDelay * (i + 1)) - (t2 - t1);
             // struct timespec delayTime;
             // delayTime.tv_nsec = (targetDelay - dur) * 1000;
+            
+            // cout << "Duration: " << dur.count() << endl;
                         
-            if (dur >= 0ms) {
-                this_thread::sleep_for(dur);
-                syncTime = 0ms;
-            }
-            else {
-                syncTime = -dur;
+            if (dur >= 0ms) this_thread::sleep_for(dur);
+            else if (-dur > targetDelay) {
+                const uint8_t skipFrames = (-dur) / targetDelay;
+                i += skipFrames;
+                skippedFrames += skipFrames;
             }
         }
         cout << "End of video, thanks for watching!" << endl;
@@ -170,10 +189,12 @@ int main() {
         // Release the video capture object
         cap.release();
         
-        sigCleanUp(2);
+        sigCleanUp(0);
     }
     else {
-        sleep(1);
+        // This is the child thread
+        sleep(1); // Ensure playback starts at the same time
+        
         string path(HOME + vidPath);
         char *args[] = {
             (char*)"ffplay",
@@ -182,7 +203,6 @@ int main() {
             (char*)path.c_str(),
             NULL
         };
-        // we are the child
         
         // Redirect stderr to /dev/null
         const int fd = open("/dev/null", O_WRONLY | O_CREAT, 0666);

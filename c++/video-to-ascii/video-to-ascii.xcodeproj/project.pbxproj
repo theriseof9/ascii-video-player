@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		546DFDDA2665C34C0005F05E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 546DFDD92665C34C0005F05E /* main.cpp */; };
 		DA65A3D826661A4200546D16 /* colorUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA65A3D626661A4200546D16 /* colorUtil.cpp */; };
+		DA69D433266897DB00D231FF /* cmdutils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA69D431266897DB00D231FF /* cmdutils.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +30,8 @@
 		546DFDE02665D4D00005F05E /* video-to-ascii.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "video-to-ascii.entitlements"; sourceTree = "<group>"; };
 		DA65A3D626661A4200546D16 /* colorUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = colorUtil.cpp; sourceTree = "<group>"; };
 		DA65A3D726661A4200546D16 /* colorUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = colorUtil.hpp; sourceTree = "<group>"; };
+		DA69D431266897DB00D231FF /* cmdutils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cmdutils.cpp; sourceTree = "<group>"; };
+		DA69D432266897DB00D231FF /* cmdutils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cmdutils.hpp; sourceTree = "<group>"; };
 		DA8BB63A266742EF003B41C2 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib; sourceTree = "<group>"; };
 		DA8BB63B26674369003B41C2 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavutil.a; sourceTree = "<group>"; };
 		DA8BB63C26674369003B41C2 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavcodec.a; sourceTree = "<group>"; };
@@ -36,22 +39,6 @@
 		DA8BB63E26674369003B41C2 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavformat.a; sourceTree = "<group>"; };
 		DA8BB63F26674369003B41C2 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libswresample.a; sourceTree = "<group>"; };
 		DA8BB643266743BB003B41C2 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavdevice.a; sourceTree = "<group>"; };
-		DA8BB64726674FEF003B41C2 /* MediaList.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MediaList.hpp; sourceTree = "<group>"; };
-		DA8BB64826674FEF003B41C2 /* Internal.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Internal.hpp; sourceTree = "<group>"; };
-		DA8BB64926674FEF003B41C2 /* structures.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = structures.hpp; sourceTree = "<group>"; };
-		DA8BB64A26674FEF003B41C2 /* Instance.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Instance.hpp; sourceTree = "<group>"; };
-		DA8BB64B26674FEF003B41C2 /* EventManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EventManager.hpp; sourceTree = "<group>"; };
-		DA8BB64C26674FEF003B41C2 /* MediaPlayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MediaPlayer.hpp; sourceTree = "<group>"; };
-		DA8BB64D26674FEF003B41C2 /* Equalizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Equalizer.hpp; sourceTree = "<group>"; };
-		DA8BB64E26674FF0003B41C2 /* common.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = common.hpp; sourceTree = "<group>"; };
-		DA8BB64F26674FF0003B41C2 /* MediaDiscoverer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MediaDiscoverer.hpp; sourceTree = "<group>"; };
-		DA8BB65026674FF0003B41C2 /* Media.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Media.hpp; sourceTree = "<group>"; };
-		DA8BB65126674FF0003B41C2 /* Picture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Picture.hpp; sourceTree = "<group>"; };
-		DA8BB65226674FF0003B41C2 /* MediaListPlayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MediaListPlayer.hpp; sourceTree = "<group>"; };
-		DA8BB65326674FF0003B41C2 /* MediaLibrary.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MediaLibrary.hpp; sourceTree = "<group>"; };
-		DA8BB65426674FF0003B41C2 /* vlc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vlc.hpp; sourceTree = "<group>"; };
-		DA8BB65526674FF0003B41C2 /* Dialog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dialog.hpp; sourceTree = "<group>"; };
-		DA8BB65626674FF0003B41C2 /* RendererDiscoverer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RendererDiscoverer.hpp; sourceTree = "<group>"; };
 		DA8BB6582667647F003B41C2 /* libvlccore.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvlccore.9.dylib; path = ../../../../../../../usr/local/Cellar/vlc/lib/libvlccore.9.dylib; sourceTree = "<group>"; };
 		DA8BB6592667647F003B41C2 /* libvlc.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvlc.5.dylib; path = ../../../../../../../usr/local/Cellar/vlc/lib/libvlc.5.dylib; sourceTree = "<group>"; };
 		DA8BB66626676550003B41C2 /* libvlc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvlc.dylib; path = "video-to-ascii/libvlc.dylib"; sourceTree = "<group>"; };
@@ -103,11 +90,12 @@
 		546DFDD82665C34C0005F05E /* video-to-ascii */ = {
 			isa = PBXGroup;
 			children = (
-				DA8BB65726675003003B41C2 /* vlcpp */,
 				546DFDE02665D4D00005F05E /* video-to-ascii.entitlements */,
 				546DFDD92665C34C0005F05E /* main.cpp */,
 				DA65A3D626661A4200546D16 /* colorUtil.cpp */,
 				DA65A3D726661A4200546D16 /* colorUtil.hpp */,
+				DA69D431266897DB00D231FF /* cmdutils.cpp */,
+				DA69D432266897DB00D231FF /* cmdutils.hpp */,
 			);
 			path = "video-to-ascii";
 			sourceTree = "<group>";
@@ -142,29 +130,6 @@
 				DA8BB63A266742EF003B41C2 /* lib */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		DA8BB65726675003003B41C2 /* vlcpp */ = {
-			isa = PBXGroup;
-			children = (
-				DA8BB64E26674FF0003B41C2 /* common.hpp */,
-				DA8BB65526674FF0003B41C2 /* Dialog.hpp */,
-				DA8BB64D26674FEF003B41C2 /* Equalizer.hpp */,
-				DA8BB64B26674FEF003B41C2 /* EventManager.hpp */,
-				DA8BB64A26674FEF003B41C2 /* Instance.hpp */,
-				DA8BB64826674FEF003B41C2 /* Internal.hpp */,
-				DA8BB65026674FF0003B41C2 /* Media.hpp */,
-				DA8BB64F26674FF0003B41C2 /* MediaDiscoverer.hpp */,
-				DA8BB65326674FF0003B41C2 /* MediaLibrary.hpp */,
-				DA8BB64726674FEF003B41C2 /* MediaList.hpp */,
-				DA8BB65226674FF0003B41C2 /* MediaListPlayer.hpp */,
-				DA8BB64C26674FEF003B41C2 /* MediaPlayer.hpp */,
-				DA8BB65126674FF0003B41C2 /* Picture.hpp */,
-				DA8BB65626674FF0003B41C2 /* RendererDiscoverer.hpp */,
-				DA8BB64926674FEF003B41C2 /* structures.hpp */,
-				DA8BB65426674FF0003B41C2 /* vlc.hpp */,
-			);
-			path = vlcpp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,6 +190,7 @@
 			files = (
 				546DFDDA2665C34C0005F05E /* main.cpp in Sources */,
 				DA65A3D826661A4200546D16 /* colorUtil.cpp in Sources */,
+				DA69D433266897DB00D231FF /* cmdutils.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
