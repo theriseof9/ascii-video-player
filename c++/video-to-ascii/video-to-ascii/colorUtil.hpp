@@ -8,6 +8,12 @@
 #ifndef colorUtil_hpp
 #define colorUtil_hpp
 
-int getColorId(int r1, int g1, int b_);
+#include <limits.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+int getColorId(uint8_t r1, uint8_t g1, uint8_t b_);
 
 #endif /* colorUtil_hpp */
