@@ -19,6 +19,9 @@
 #include "colorUtil.hpp"
 #include "cmdutils.hpp"
 
+// Structs
+#include "Structs.h"
+
 // Finding terminal size
 #include <sys/ioctl.h> //ioctl() and TIOCGWINSZ
 #include <unistd.h> // for STDOUT_FILENO
@@ -124,6 +127,12 @@ int handleCV2Error( int status, const char* func_name,
     return 0;   //Return value is not used
 }
 
+// MARK:- Argument actions
+
+FlagActions fActs[] = {
+    {"i", "Prints out infomation about this program", writeBanner},
+};
+
 // MARK:- Main
 
 int main(int argc, char** argv) {
@@ -135,6 +144,7 @@ int main(int argc, char** argv) {
     signal(SIGINT, sigIntHandler);
     
     // Parse command line flags
+    parseArgs(argc, argv, fActs);
     
     // Get terminal size
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &termSize); // This only works on Unix
@@ -151,7 +161,7 @@ int main(int argc, char** argv) {
     }
     
     char pathBuff[PATH_MAX];
-    char* absPath = realpath(argv[1], pathBuff);
+    char* absPath = realpath(argv[argc - 1], pathBuff);
     
     if (!absPath) {
         writeMsg("Failed to determine absolute video path", LOG_FATAL);

@@ -39,8 +39,6 @@ void writeMsg(string msg, uint8_t level) {
     cout << "\u001b[0m" << ": " << msg << endl;
 }
 
-
-
 void writeBanner() {
     puts("╔══════════════════════════════════════════════════╗");
     puts("║              C++ ASCII Video Player              ║");
@@ -49,4 +47,21 @@ void writeBanner() {
     puts("║      Written by Vincent Kwok and Wang Zerui      ║");
     puts("║    Plays a video from a file on your terminal    ║");
     puts("╚══════════════════════════════════════════════════╝");
+}
+
+void writeHelp() {
+    // MARK: Help header
+    puts("╔═════════════════════════════════════════════════════════════════════╗");
+    puts("║                     C++ ASCII Video Player Help                     ║");
+    puts("╠═════════╦═══════════════════════════════════════════════════════════╣");
+    puts("║ Command ║                        Description                        ║");
+    puts("╠═════════╬═══════════════════════════════════════════════════════════╣");
+    // MARK: Help content
+    
+    // MARK: Help footer
+    puts("╚═════════════════════════════════════════════════════════════════════╝");
+}
+
+void parseArgs(int argc, char** argv, FlagActions fActions[]) {
+    
 }

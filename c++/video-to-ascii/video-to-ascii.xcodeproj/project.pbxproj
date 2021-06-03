@@ -32,6 +32,7 @@
 		DA65A3D726661A4200546D16 /* colorUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = colorUtil.hpp; sourceTree = "<group>"; };
 		DA69D431266897DB00D231FF /* cmdutils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cmdutils.cpp; sourceTree = "<group>"; };
 		DA69D432266897DB00D231FF /* cmdutils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cmdutils.hpp; sourceTree = "<group>"; };
+		DA69D4342668C4D300D231FF /* Structs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structs.h; sourceTree = "<group>"; };
 		DA8BB63A266742EF003B41C2 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lib; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib; sourceTree = "<group>"; };
 		DA8BB63B26674369003B41C2 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavutil.a; sourceTree = "<group>"; };
 		DA8BB63C26674369003B41C2 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../../../../../usr/local/Cellar/ffmpeg/4.4_1/lib/libavcodec.a; sourceTree = "<group>"; };
@@ -96,6 +97,7 @@
 				DA65A3D726661A4200546D16 /* colorUtil.hpp */,
 				DA69D431266897DB00D231FF /* cmdutils.cpp */,
 				DA69D432266897DB00D231FF /* cmdutils.hpp */,
+				DA69D4342668C4D300D231FF /* Structs.h */,
 			);
 			path = "video-to-ascii";
 			sourceTree = "<group>";

@@ -3,6 +3,7 @@
 //  video-to-ascii
 //
 //  Created by Vincent Kwok on 3/6/21.
+//  File containing utility functions related to console I/O
 //
 
 #ifndef cmdutils_hpp
@@ -12,6 +13,9 @@
 #include <iostream>
 #include <string>
 #include <chrono>
+
+// Structs
+#include "Structs.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -43,5 +47,7 @@ using namespace std::chrono;
 
 void writeMsg(string msg, uint8_t level);
 void writeBanner();
+
+void parseArgs(int argc, char** argv, FlagActions fActions[]);
 
 #endif /* cmdutils_hpp */
