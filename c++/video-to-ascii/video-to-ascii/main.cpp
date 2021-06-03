@@ -46,6 +46,8 @@ struct winsize termSize;
 vector<string> buffer;
 bool lock_buff = false;
 bool halt_loop = false;
+uint16_t scn_col = 80;
+uint16_t scn_row = 45;
 uint32_t skippedFrames = 0;
 
 // MARK:- Renderer function, running async
@@ -61,7 +63,7 @@ void decToAscii(VideoCapture cap) {
         if (frame.empty()) break;
         
         // Resize frame to the size of the terminal
-        resize(frame, frame, Size(termSize.ws_col, termSize.ws_row), 0, 0, INTER_AREA);
+        resize(frame, frame, Size(scn_col, scn_row), 0, 0, INTER_AREA);
         
         uint8_t* pixelPtr = (uint8_t*)frame.data;
         int cn = frame.channels();
@@ -130,7 +132,9 @@ int handleCV2Error( int status, const char* func_name,
 // MARK:- Argument actions
 
 FlagActions fActs[] = {
-    {"i", "Prints out infomation about this program", writeBanner},
+    {"i", "Prints out infomation about this program", true, writeBanner},
+    {"width", "Override width of viewport (in characters)", false, NULL},
+    {"height", "Override height of viewport (in characters)", false, NULL}
 };
 
 // MARK:- Main
@@ -143,17 +147,20 @@ int main(int argc, char** argv) {
     // Register SIGINT signal handler
     signal(SIGINT, sigIntHandler);
     
-    // Parse command line flags
-    parseArgs(argc, argv, fActs);
-    
     // Get terminal size
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &termSize); // This only works on Unix
+    scn_col = termSize.ws_col;
+    scn_row = termSize.ws_row;
     
-    // Create a VideoCapture object and open the input file
-    // If the input is the web camera, pass 0 instead of the video file name
-    // Find home dir (on Unix only)
-    // string HOME(getenv("HOME"));
-    // string vidPath("/video.mp4");
+    // Parse command line flags
+    const vector<FlagOps> cmdFlags = parseArgs(argc, argv, fActs, 3);
+    
+    for (uint16_t i = 0; i < cmdFlags.size(); i++) {
+        // cout << "Flag: " << cmdFlags[i].flag << ", value: " << cmdFlags[i].val;
+        const auto f = cmdFlags[i];
+        if (f.flag == "width") scn_col = std::stoi(f.val);
+        else if (f.flag == "height") scn_row = std::stoi(f.val);
+    }
     
     if (argc < 2) {
         writeMsg("No video path provided. Run with the -h flag to view help", LOG_FATAL);
@@ -205,6 +212,8 @@ int main(int argc, char** argv) {
         
         // Hide cursor
         system("tput civis");
+        // Clear terminal
+        system("clear && printf '\e[3J'");
 
         while (!halt_loop) {
             // printf("\033c");

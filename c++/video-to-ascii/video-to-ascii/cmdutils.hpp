@@ -13,6 +13,7 @@
 #include <iostream>
 #include <string>
 #include <chrono>
+#include <vector>
 
 // Structs
 #include "Structs.h"
@@ -48,6 +49,6 @@ using namespace std::chrono;
 void writeMsg(string msg, uint8_t level);
 void writeBanner();
 
-void parseArgs(int argc, char** argv, FlagActions fActions[]);
+vector<FlagOps> parseArgs(int argc, char** argv, FlagActions fActions[], uint16_t fArgs);
 
 #endif /* cmdutils_hpp */

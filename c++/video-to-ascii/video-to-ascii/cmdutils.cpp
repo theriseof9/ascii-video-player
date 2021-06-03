@@ -49,7 +49,7 @@ void writeBanner() {
     puts("╚══════════════════════════════════════════════════╝");
 }
 
-void writeHelp() {
+void writeHelp(FlagActions fActions[], uint16_t fArgs) {
     // MARK: Help header
     puts("╔═════════════════════════════════════════════════════════════════════╗");
     puts("║                     C++ ASCII Video Player Help                     ║");
@@ -59,9 +59,41 @@ void writeHelp() {
     // MARK: Help content
     
     // MARK: Help footer
-    puts("╚═════════════════════════════════════════════════════════════════════╝");
+    puts("╚═════════╩═══════════════════════════════════════════════════════════╝");
 }
 
-void parseArgs(int argc, char** argv, FlagActions fActions[]) {
-    
+vector<FlagOps> parseArgs(int argc, char** argv, FlagActions fActions[], uint16_t fArgs) {
+    vector<FlagOps> flags;
+    for (uint16_t i = 1; i < argc; i++) {
+        // Check if this is a flag
+        if (argv[i][0] != '-') {
+            if (i != argc - 1) puts(("Unrecognised argument: '" + string(argv[i]) + "'").c_str());
+            continue;
+        }
+        if (strcmp("-help", argv[i]) == 0) {
+            writeHelp(fActions, fArgs);
+            exit(0);
+        }
+        bool valid = false;
+        for (uint16_t j = 0; j < fArgs; j++) {
+            // cout << (string("-") += fActions[j].flag).c_str();
+            if (strcmp((string("-") += fActions[j].flag).c_str(), argv[i]) == 0) {
+                if (fActions[j].isAct) {
+                    fActions[j].fAct();
+                    exit(0);
+                }
+                else {
+                    valid = true;
+                    const string fStr = string(argv[i]).substr(1);
+                    if (i + 1 < argc && argv[i + 1][0] != '-') {
+                        flags.push_back({fStr, argv[i + 1]});
+                        i++; // Skip the next argument
+                    }
+                    else flags.push_back({fStr, ""});
+                }
+            }
+        }
+        if (!valid) puts((string("Invalid flag '") += argv[i] + string("'")).c_str());
+    }
+    return flags;
 }
