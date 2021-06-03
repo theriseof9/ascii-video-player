@@ -182,7 +182,7 @@ int main() {
                 skippedFrames += skipFrames;
             }
         }
-        cout << "End of video, thanks for watching!" << endl;
+        writeMsg("End of video, thanks for watching!", LOG_INFO);
         
         decThread.detach(); // If the thread is still running, detach it (at this point it should not be running)
         
