@@ -23,8 +23,13 @@
 #include "Structs.h"
 
 // Finding terminal size
+#if defined(_WIN64) || defined(_WIN32)
+#include <windows.h>
+#else
 #include <sys/ioctl.h> //ioctl() and TIOCGWINSZ
 #include <unistd.h> // for STDOUT_FILENO
+#endif
+
 
 // Namespaces
 using namespace std;
@@ -148,9 +153,16 @@ int main(int argc, char** argv) {
     signal(SIGINT, sigIntHandler);
     
     // Get terminal size
+    #if defined(_WIN64) || defined(_WIN32)
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    scn_col = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+    scn_row = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+    #else
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &termSize); // This only works on Unix
     scn_col = termSize.ws_col;
     scn_row = termSize.ws_row;
+    #endif
     
     // MARK: Parse command line flags
     const vector<FlagOps> cmdFlags = parseArgs(argc, argv, fActs, 3);
@@ -213,7 +225,17 @@ int main(int argc, char** argv) {
         // chrono::duration<double, milli> syncTime = 0ms;
         
         // Hide cursor
+        #if defined(_WIN64) || defined(_WIN32)
+        HANDLE hStdOut = NULL;
+        CONSOLE_CURSOR_INFO curInfo;
+
+        hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+        GetConsoleCursorInfo(hStdOut, &curInfo);
+        curInfo.bVisible = FALSE;
+        SetConsoleCursorInfo(hStdOut, &curInfo);
+        #else
         system("tput civis");
+        #endif
         // Clear terminal
         system("clear && printf '\e[3J'");
 
@@ -265,7 +287,11 @@ int main(int argc, char** argv) {
         const int fd = open("/dev/null", O_WRONLY | O_CREAT, 0666);
         dup2(fd, 2); // Change stderr to opened file
         dup2(fd, 1);
+        #if defined(_WIN64) || defined(_WIN32)
+        system((string("C:\ffmpeg\bin\ffplay\ffplay.exe -vn -nodisp ") + string(absPath)).c_str());
+        #else
         execve("/usr/local/bin/ffplay", args, {});
+        #endif
         close(fd); // Close file (although this will never happen)
         _exit(EXIT_FAILURE);   // exec never returns
     }
