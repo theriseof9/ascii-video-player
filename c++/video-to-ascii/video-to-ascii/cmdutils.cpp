@@ -11,7 +11,7 @@ void writeMsg(string msg, uint8_t level) {
     const auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
     const auto date = ctime(&now);
     date[strlen(date) - 1] = '\0'; // Strip newline from date
-    cout << date << " - ";
+    cout << "\u001b[0m" << date << " - ";
     
     switch (level) {
         case LOG_VERBOSE:
@@ -37,4 +37,16 @@ void writeMsg(string msg, uint8_t level) {
     }
     
     cout << "\u001b[0m" << ": " << msg << endl;
+}
+
+
+
+void writeBanner() {
+    puts("╔══════════════════════════════════════════════════╗");
+    puts("║              C++ ASCII Video Player              ║");
+    //   "║ Version 0.1.0, compiled Fri May  5 00:29:26 2017 ║");
+    puts(string(string("║ Version ") + VERSION_STR + ", compiled " + __TIMESTAMP__ + " ║").c_str());
+    puts("║      Written by Vincent Kwok and Wang Zerui      ║");
+    puts("║    Plays a video from a file on your terminal    ║");
+    puts("╚══════════════════════════════════════════════════╝");
 }
