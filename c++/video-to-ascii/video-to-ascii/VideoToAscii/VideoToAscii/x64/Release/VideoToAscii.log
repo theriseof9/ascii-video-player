@@ -1,0 +1,11 @@
+﻿  main.cpp
+C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\main.cpp(94,85): warning C4244: 'initializing': conversion from 'double' to 'uint8_t', possible loss of data
+C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\main.cpp(94,41): warning C4244: 'initializing': conversion from 'double' to 'const uint8_t', possible loss of data
+C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\main.cpp(281,51): warning C4244: 'initializing': conversion from 'double' to 'uint8_t', possible loss of data
+C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\main.cpp(281,42): warning C4244: 'initializing': conversion from 'double' to 'const uint8_t', possible loss of data
+  Generating code
+  3 of 531 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  VideoToAscii.vcxproj -> C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\VideoToAscii\x64\Release\VideoToAscii.exe
