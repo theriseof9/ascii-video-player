@@ -9,3 +9,5 @@ video_to_ascii.egg-info
 build/
 test.py
 env/
+*.dll
+c++/video-to-ascii/video-to-ascii/VideoToAscii/.vs
