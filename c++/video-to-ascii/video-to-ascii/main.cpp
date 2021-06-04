@@ -167,16 +167,16 @@ int main(int argc, char** argv) {
     signal(SIGINT, sigIntHandler);
     
     // Get terminal size
-    #if defined(_WIN64) || defined(_WIN32)
+#if defined(_WIN64) || defined(_WIN32)
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
     scn_col = csbi.srWindow.Right - csbi.srWindow.Left + 1;
     scn_row = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-    #else
+#else
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &termSize); // This only works on Unix
     scn_col = termSize.ws_col;
     scn_row = termSize.ws_row;
-    #endif
+#endif
     
     // MARK: Parse command line flags
     const vector<FlagOps> cmdFlags = parseArgs(argc, argv, fActs, 3);
