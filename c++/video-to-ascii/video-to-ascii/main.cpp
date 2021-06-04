@@ -220,7 +220,7 @@ int main(int argc, char** argv) {
     else if (pid > 0) {
 #endif
         // Redirect CV2 errors
-        redirectError(handleCV2Error);
+        // redirectError(handleCV2Error);
         VideoCapture cap(absPath);
         
         // Check if camera was opened successfully
