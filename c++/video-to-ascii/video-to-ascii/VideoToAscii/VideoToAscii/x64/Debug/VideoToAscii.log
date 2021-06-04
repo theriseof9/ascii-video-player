@@ -1,0 +1,9 @@
+﻿  main.cpp
+C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\main.cpp(94,85): warning C4244: 'initializing': conversion from 'double' to 'uint8_t', possible loss of data
+C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\main.cpp(94,41): warning C4244: 'initializing': conversion from 'double' to 'const uint8_t', possible loss of data
+C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\main.cpp(114,23): warning C4129: 'e': unrecognized character escape sequence
+C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\main.cpp(129,12): warning C4129: 'e': unrecognized character escape sequence
+C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\main.cpp(259,16): warning C4129: 'e': unrecognized character escape sequence
+C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\main.cpp(279,51): warning C4244: 'initializing': conversion from 'double' to 'uint8_t', possible loss of data
+C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\main.cpp(279,42): warning C4244: 'initializing': conversion from 'double' to 'const uint8_t', possible loss of data
+  VideoToAscii.vcxproj -> C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\VideoToAscii\x64\Debug\VideoToAscii.exe

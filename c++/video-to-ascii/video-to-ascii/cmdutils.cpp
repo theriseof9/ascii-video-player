@@ -8,10 +8,10 @@
 #include "cmdutils.hpp"
 
 void writeMsg(string msg, uint8_t level) {
-    const auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-    const auto date = ctime(&now);
-    date[strlen(date) - 1] = '\0'; // Strip newline from date
-    cout << "\u001b[0m" << date << " - ";
+    //const auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
+    //const auto date = ctime(&now);
+    //date[strlen(date) - 1] = '\0'; // Strip newline from date
+    //cout << "\u001b[0m" << date << " - ";
     
     switch (level) {
         case LOG_VERBOSE:

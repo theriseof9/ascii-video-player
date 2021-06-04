@@ -14,6 +14,7 @@
 #include <sys/stat.h>
 #include <limits.h>
 #include <stdlib.h>
+#include <csignal>
 
 // Utilities
 #include "colorUtil.hpp"
@@ -22,9 +23,13 @@
 // Structs
 #include "Structs.h"
 
-// Finding terminal size
+// Finding terminal size and other Windows specifics
 #if defined(_WIN64) || defined(_WIN32)
 #include <windows.h>
+#include <fcntl.h>
+#include <io.h>
+#define PATH_MAX MAX_PATH
+#define sleep(x) Sleep(x * 1000)
 #else
 #include <sys/ioctl.h> //ioctl() and TIOCGWINSZ
 #include <unistd.h> // for STDOUT_FILENO
@@ -47,7 +52,9 @@ const string DENSITY[] = {
 };
 
 // MARK: Globals
+#if !defined(_WIN64) && !defined(_WIN32)
 struct winsize termSize;
+#endif
 vector<string> buffer;
 bool lock_buff = false;
 bool halt_loop = false;
@@ -76,7 +83,7 @@ void decToAscii(VideoCapture cap) {
         
         if (halt_loop) return;
         buffer.push_back("");
-        buffer[buffer.size()-1] += "\u001b[" + to_string(termSize.ws_col) + "D\u001b[" + to_string(termSize.ws_row) + "A";
+        buffer[buffer.size()-1] += "\u001b[" + to_string(scn_col) + "D\u001b[" + to_string(scn_row) + "A";
         for (int i = 0; i < frame.rows; i++) {
             for (int j = 0; j < frame.cols; j++) {
                 bgrPixel.val[2] = pixelPtr[i * frame.cols * cn + j * cn + 0]; // B
@@ -148,7 +155,12 @@ int main(int argc, char** argv) {
     // Fast IO speed
     cout.tie(0);
     ios_base::sync_with_stdio(0);
-    
+
+#if defined(_WIN64) || defined(_WIN32)
+    //_setmode(_fileno(stdout), _O_U16TEXT);
+    system("chcp 65001");
+#endif
+
     // Register SIGINT signal handler
     signal(SIGINT, sigIntHandler);
     
@@ -182,13 +194,19 @@ int main(int argc, char** argv) {
     
     // MARK: Retrieve absolute path from user-entered relative path
     char pathBuff[PATH_MAX];
+#if defined(_WIN64) || defined(_WIN32)
+    _fullpath(pathBuff, argv[argc - 1], PATH_MAX);
+    char* absPath = pathBuff;
+#else
     char* absPath = realpath(argv[argc - 1], pathBuff);
+#endif
     if (!absPath) {
         writeMsg("Failed to determine absolute video path", LOG_FATAL);
         cleanUp(-1);
     }
     
     // MARK: Fork parent process
+#if !defined(_WIN64) && !defined(_WIN32)
     pid_t pid = fork();
 
     if (pid == -1) {
@@ -198,6 +216,7 @@ int main(int argc, char** argv) {
     }
     // MARK:- Parent thread
     else if (pid > 0) {
+#endif
         // Redirect CV2 errors
         redirectError(handleCV2Error);
         VideoCapture cap(absPath);
@@ -241,11 +260,12 @@ int main(int argc, char** argv) {
 
         // MARK:- Main display loop
         while (!halt_loop) {
+            if (i >= buffer.size()) break;
+
             fputs(buffer[i].c_str(), stdout);
             // buffer[i] = "";
             
             i++;
-            if (i > buffer.size()) break;
             
             const auto t2 = high_resolution_clock::now();
             const auto dur = (targetDelay * (i + 1)) - (t2 - t1);
@@ -269,6 +289,7 @@ int main(int argc, char** argv) {
         cap.release();
         
         cleanUp(0, true);
+#if !defined(_WIN64) && !defined(_WIN32)
     }
     // MARK:- Child thread
     else {
@@ -295,6 +316,7 @@ int main(int argc, char** argv) {
         close(fd); // Close file (although this will never happen)
         _exit(EXIT_FAILURE);   // exec never returns
     }
+#endif
     
     return 0;
 }
