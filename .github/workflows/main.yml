@@ -9,15 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Download ffplay
-      run: wget https://github.com/ffbinaries/ffbinaries-prebuilt/releases/download/v4.2.1/ffplay-4.2.1-osx-64.zip
-    
-    - name: Unzip ffplay
-      run: unzip ./ffplay-4.2.1-osx-64.zip
-      
-    - name: Copy ffplay binary to /usr/local/bin
-      run: cp ./ffplay /usr/local/bin/ffplay
-
     - name: Install OpenCV
       run: brew install opencv --force-bottle
       
