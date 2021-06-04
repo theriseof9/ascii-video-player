@@ -26,13 +26,13 @@
 // Finding terminal size and other Windows specifics
 #if defined(_WIN64) || defined(_WIN32)
 #include <windows.h>
-#include <fcntl.h>
-#include <io.h>
 #define PATH_MAX MAX_PATH
 #define sleep(x) Sleep(x * 1000)
+#define clear() system("cls")
 #else
 #include <sys/ioctl.h> //ioctl() and TIOCGWINSZ
 #include <unistd.h> // for STDOUT_FILENO
+#define clear() system("clear && printf '\e[3J'")
 #endif
 
 
@@ -108,10 +108,12 @@ void cleanUp(int signum, bool clear = false) {
     halt_loop = true;
     
     // Restore cursor
+#if !defined(_WIN64) && !defined(_WIN32)
     system("tput cvvis");
+#endif
     
     // Clear terminal
-    if (clear) system("clear && printf '\e[3J'");
+    if (clear) clear();
 
     cout << "\u001b[0m"; // Reset color
     if (skippedFrames != 0) writeMsg("Skipped " + to_string(skippedFrames) + " frame(s)", LOG_WARN);
@@ -126,7 +128,7 @@ void sigIntHandler(int signum) {
     halt_loop = true;
     
     // Clear terminal
-    system("clear && printf '\e[3J'");
+    clear();
     writeMsg("Received signal " + to_string(signum) + ", halting", LOG_WARN);
     cleanUp(signum);
 }
@@ -158,7 +160,7 @@ int main(int argc, char** argv) {
 
 #if defined(_WIN64) || defined(_WIN32)
     //_setmode(_fileno(stdout), _O_U16TEXT);
-    system("chcp 65001");
+    system("chcp 65001 >> NUL"); // Enable cmd.exe unicode mode
 #endif
 
     // Register SIGINT signal handler
@@ -256,7 +258,7 @@ int main(int argc, char** argv) {
         system("tput civis");
         #endif
         // Clear terminal
-        system("clear && printf '\e[3J'");
+        clear();
 
         // MARK:- Main display loop
         while (!halt_loop) {

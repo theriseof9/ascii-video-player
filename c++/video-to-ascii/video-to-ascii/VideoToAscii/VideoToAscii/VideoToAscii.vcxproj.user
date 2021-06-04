@@ -4,4 +4,8 @@
     <LocalDebuggerCommandArguments> C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\test-vid.mp4</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LocalDebuggerCommandArguments> C:\Users\kxzv3\ascii-video-player\c++\video-to-ascii\video-to-ascii\test-vid.mp4</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>
