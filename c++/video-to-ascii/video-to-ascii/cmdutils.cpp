@@ -70,7 +70,7 @@ vector<FlagOps> parseArgs(int argc, char** argv, FlagActions fActions[], uint16_
             if (i != argc - 1) puts(("Unrecognised argument: '" + string(argv[i]) + "'").c_str());
             continue;
         }
-        if (strcmp("-help", argv[i]) == 0) {
+        if (strcmp("-help", argv[i]) == 0 || strcmp("-h", argv[i]) == 0) {
             writeHelp(fActions, fArgs);
             exit(0);
         }
