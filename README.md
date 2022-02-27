@@ -12,7 +12,12 @@ Operating system compatibility:
 |---------------|------------------------------|
 | macOS >= 11.0 | ✅　Verified: Builds and runs |
 | POSIX-compliant OS | ❓　Unknown: **Should** work in theory but untested |
-| Windows       | ✅　Works on windows |
+| Windows       | ✅　Works on windows (Under releases) |
+
+## Preview
+
+https://user-images.githubusercontent.com/69704785/155867958-773401a2-fab8-4128-a859-c94233c05872.mp4
+
 
 ## Building
 
